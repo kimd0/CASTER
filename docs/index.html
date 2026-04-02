@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CASTER: A Multimodal Dataset and Benchmark for Observation-Grounded StarCraft Commentary Generation</title>
+    <meta name="description" content="CASTER: Commentary Alignment and State Tracking for Esports Research, with overview, dataset browser, and benchmark results.">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-hero" id="top">
+        <h1>CASTER: A Multimodal Dataset and Benchmark for Observation-Grounded StarCraft Commentary Generation</h1>
+        <p class="hero-summary">Commentary Alignment and State Tracking for Esports Research: utterance-aligned observer-view clips, observer-visible structured state, and quality-controlled professional commentary.</p>
+        <div class="hero-meta" aria-label="Dataset summary">
+          <span>239 matches</span>
+          <span>28,734 aligned instances</span>
+          <span>2 benchmark tasks</span>
+        </div>
+        <div class="hero-links" aria-label="Project links">
+          <a class="hero-link-button hero-link-github" href="https://github.com/kimd0/CASTER" target="_blank" rel="noreferrer">
+            <span class="hero-link-icon" aria-hidden="true">
+              <img src="./assets/icons/github.svg" alt="" loading="lazy" decoding="async">
+            </span>
+            <span class="hero-link-text">GitHub</span>
+          </a>
+          <a class="hero-link-button hero-link-hf" href="https://huggingface.co/datasets/kimd00/CASTER" target="_blank" rel="noreferrer">
+            <span class="hero-link-icon" aria-hidden="true">
+              <img src="./assets/icons/huggingface.svg" alt="" loading="lazy" decoding="async">
+            </span>
+            <span class="hero-link-text">Hugging Face</span>
+          </a>
+        </div>
+        <nav class="tab-nav" aria-label="Project sections">
+          <button
+            id="tab-trigger-overview"
+            class="tab-button is-active"
+            type="button"
+            role="tab"
+            aria-selected="true"
+            aria-controls="panel-overview"
+            data-tab-trigger="overview"
+          >
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter">
+                <path d="M5 4h14v16H5z"></path>
+                <path d="M8 8h8"></path>
+                <path d="M8 12h8"></path>
+                <path d="M8 16h5"></path>
+              </svg>
+            </span>
+            <span>Overview</span>
+          </button>
+          <button
+            id="tab-trigger-dataset"
+            class="tab-button"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-dataset"
+            data-tab-trigger="dataset"
+          >
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter">
+                <path d="M4 5h16v14H4z"></path>
+                <path d="M4 10h16"></path>
+                <path d="M10 10v9"></path>
+              </svg>
+            </span>
+            <span>Dataset</span>
+          </button>
+          <button
+            id="tab-trigger-benchmark"
+            class="tab-button"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            aria-controls="panel-benchmark"
+            data-tab-trigger="benchmark"
+          >
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" stroke-linejoin="miter">
+                <path d="M5 19V9"></path>
+                <path d="M12 19V5"></path>
+                <path d="M19 19v-7"></path>
+                <path d="M3 19h18"></path>
+              </svg>
+            </span>
+            <span>Benchmark</span>
+          </button>
+        </nav>
+      </header>
+
+      <main class="tab-panels">
+        <section
+          id="panel-overview"
+          class="tab-panel is-active"
+          role="tabpanel"
+          aria-labelledby="tab-trigger-overview"
+          data-tab-panel="overview"
+        >
+          <section class="overview-flow">
+            <section class="content-section compact-section overview-abstract">
+              <h3 class="overview-heading">Abstract</h3>
+              <div class="overview-copy-column">
+                <p>
+                  Many multimedia language-generation tasks require grounding in both visible content and evolving, partially observable structured states. Professional esports commentary exemplifies
+                  this: in <i>StarCraft: Brood War</i>, meaningful commentary relies on short-term temporal context, observer camera motion, and observer-visible unit configurations. We introduce
+                  <b>CASTER</b> (<i>Commentary Alignment and State Tracking for Esports Research</i>), a multimodal dataset for observation-grounded commentary in partially observable environments.
+                  It aligns utterance-level observer-view clips, structured state from replay logs and viewport traces, and quality-controlled professional commentary.
+                </p>
+                <p>
+                  CASTER comprises <b>239</b> matches and <b>28,734</b> aligned clip-state-commentary instances with strict game-level splits. We define two tasks for reproducible evaluation:
+                  (1) <i>Clip-to-Observation</i>, predicting structured observer-state events from clips, and (2) <i>Clip+Observation-to-Commentary</i>, generating commentary conditioned on synchronized
+                  visual and structured inputs. Results indicate that recovering structured state from clips alone remains challenging, while Task 2 establishes reference points for commentary generation
+                  under clip-only, observation-only, and multimodal conditioning.
+                </p>
+              </div>
+            </section>
+
+            <section class="content-section compact-section overview-section">
+              <h3 class="overview-heading">Pipeline</h3>
+              <figure class="figure-block overview-main-figure">
+                <div class="figure-media figure-media-wide">
+                  <img src="./assets/figs/Method_Data_Pipeline.png" alt="Overview of the alignment and observation-generation pipeline." decoding="async">
+                </div>
+                <figcaption>Overview of the alignment and observation-generation pipeline. For each replay, we render a full-match observer-view video, align commentary segments to replay frames, extract utterance-level clips, aggregate observer-visible structured state with viewport traces, compress chunk-level events into scene-level observations, and perform sampled manual quality control.</figcaption>
+              </figure>
+            </section>
+
+            <section class="content-section compact-section overview-section overview-alignment-section">
+              <h3 class="overview-heading">Alignment Example</h3>
+              <figure class="figure-block alignment-paper-figure">
+                <div class="alignment-paper-layout">
+                  <section class="alignment-paper-sources">
+                    <article class="alignment-paper-source-block">
+                      <div class="figure-media figure-media-frame figure-media-wide alignment-paper-image">
+                        <img src="./assets/figs/starcraft_example_124_15393.png" alt="Replay-rendered observer-view frame used in the CASTER alignment example." decoding="async">
+                      </div>
+                      <p class="subfigure-label">Replay-rendered observer view at frame 15,393</p>
+                    </article>
+
+                    <article class="alignment-paper-source-block">
+                      <div class="mini-table-wrap alignment-draft-table-wrap">
+                        <table class="alignment-draft-table">
+                          <thead>
+                            <tr>
+                              <th>Frame</th>
+                              <th>Player</th>
+                              <th>Unit Name (ID)</th>
+                              <th>X, Y</th>
+                              <th>HP</th>
+                              <th>...</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Marine(223)</td>
+                              <td>3181, 1536</td>
+                              <td>40</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Siege_Tank_Siege(227)</td>
+                              <td>3440, 1456</td>
+                              <td>36</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_SCV(232)</td>
+                              <td>3339, 1487</td>
+                              <td>60</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Siege_Tank_Siege(293)</td>
+                              <td>3368, 1460</td>
+                              <td>70</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Siege_Tank_Tank(321)</td>
+                              <td>3266, 1490</td>
+                              <td>60</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Missile_Turret(323)</td>
+                              <td>3456, 1600</td>
+                              <td>200</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>2</td>
+                              <td>Terran_Missile_Turret(350)</td>
+                              <td>3424, 1504</td>
+                              <td>200</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>1</td>
+                              <td>Protoss_Dragoon(329)</td>
+                              <td>3424, 1280</td>
+                              <td>100</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>15393</td>
+                              <td>1</td>
+                              <td>Protoss_Dragoon(330)</td>
+                              <td>3274, 1320</td>
+                              <td>100</td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td>...</td>
+                              <td>...</td>
+                              <td>...</td>
+                              <td>...</td>
+                              <td>...</td>
+                              <td>...</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p class="subfigure-label">Synchronized structured state (<code>state.csv</code>) at frame 15,393</p>
+                    </article>
+                  </section>
+
+                  <div class="alignment-paper-flow" aria-hidden="true">
+                    <span class="alignment-paper-flow-arrow"></span>
+                  </div>
+
+                  <section class="alignment-paper-result">
+                    <pre class="code-block alignment-paper-code"><code>{
+  "seg_index": 86,
+  "clip_path": "match_124/clip/match_124_086",
+  "speech": "The shuttle gets taken down instantly! Meanwhile, the Dragoons are trying to find an angle, firing from the low ground up into [PLAYER_1]'s position.",
+  "speech_tag": "ACTION_CALL",
+  "time": "15325~15421",
+  "events": [
+    {
+      "frames": "15325~15421",
+      "viewport": "[3002,1301]",
+      "units": {
+        "[PLAYER_1]": [
+          "Marine*1 [3181,1536]",
+          "Missile_Turret*3 [3306,1621]",
+          "SCV*2 [3311,1474]]->[3315,1508]",
+          "Siege_Tank_Siege_Mode*2 [3404,1458]",
+          "Siege_Tank_Tank_Mode*2 [3114,1533]]->[3129,1611]",
+          "Vulture*2 [3357,1548]]->[3335,1568]",
+          "Vulture_Spider_Mine*2 [3094,1382]"
+        ],
+        "[PLAYER_2]": [
+          "Dragoon*4 [3390,1275]]->[3347,1295]",
+          "Observer*1 [3161,1256]",
+          "Zealot*2 [3313,1481]]->[3316,1483]"
+        ]
+      }
+    }
+  ]
+}</code></pre>
+                    <p class="subfigure-label">Aligned clip-level record (<code>context.json</code>)</p>
+                  </section>
+                </div>
+                <figcaption>Example of multimodal alignment in CASTER. The replay-rendered visual observation is synchronized with its underlying structured state, which tracks observer-visible unit information. These frame-level details are then compressed into a clip-level JSON schema containing summarized gameplay events and utterance-aligned commentary.</figcaption>
+              </figure>
+            </section>
+
+            <section class="content-section compact-section overview-section">
+              <h3 class="overview-heading">Game-Level Diversity Statistics</h3>
+              <figure class="figure-block">
+                <div class="overview-diversity-grid">
+                  <div class="overview-subfigure">
+                    <div class="chart-shell overview-diversity-chart">
+                      <canvas id="overview-race-chart" aria-label="Race picks distribution across the CASTER dataset" role="img"></canvas>
+                    </div>
+                    <p class="subfigure-label">Race picks</p>
+                  </div>
+                  <div class="overview-subfigure">
+                    <div class="chart-shell overview-diversity-chart">
+                      <canvas id="overview-matchup-chart" aria-label="Matchup distribution across the CASTER dataset" role="img"></canvas>
+                    </div>
+                    <p class="subfigure-label">Matchup distribution</p>
+                  </div>
+                </div>
+                <figcaption>Game-level diversity statistics. T, P, and Z denote the three playable races in <i>StarCraft</i>: Terran, Protoss, and Zerg, respectively.</figcaption>
+              </figure>
+            </section>
+
+            <section class="content-section compact-section overview-section">
+              <h3 class="overview-heading">Dataset Summary and Sampled Quality Control</h3>
+              <div class="table-wrap overview-summary-table-wrap">
+                <table class="overview-summary-table">
+                  <tbody>
+                    <tr class="table-group-row">
+                      <th colspan="2">Dataset statistics</th>
+                    </tr>
+                    <tr><td>Matches</td><td>239</td></tr>
+                    <tr><td>Clips / utterances</td><td>28,734</td></tr>
+                    <tr><td>Avg. clip duration</td><td>7.07 s</td></tr>
+                    <tr><td>Median clip duration</td><td>6.30 s</td></tr>
+                    <tr><td>Total clip hours</td><td>56.43</td></tr>
+                    <tr><td>Avg. utterance length (tokens)</td><td>29.5</td></tr>
+                    <tr><td>Avg. utterance length (words)</td><td>23.5</td></tr>
+                    <tr><td>Video resolution</td><td>640 &times; 480</td></tr>
+                    <tr><td>Frame rate (FPS)</td><td>23.81</td></tr>
+                    <tr><td>Train / Validation / Test matches</td><td>205 / 17 / 17</td></tr>
+                    <tr class="table-group-row">
+                      <th colspan="2">Quality control (sampled audit N=6000)</th>
+                    </tr>
+                    <tr><td>Temporal alignment within &plusmn; 5 frames</td><td>95% (5700/6000)</td></tr>
+                    <tr><td>Viewport acceptable (&le; 30 px error)</td><td>95% (5700/6000)</td></tr>
+                    <tr><td>Refined commentary judged meaning-preserving</td><td>99% (5940/6000)</td></tr>
+                    <tr><td>Not retained after final QC</td><td>2% (120/6000)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="content-section compact-section overview-section overview-label-section">
+              <h3 class="overview-heading">Label Distribution</h3>
+              <figure class="figure-block chart-block overview-chart-figure">
+                <div class="chart-shell">
+                  <canvas id="overview-tag-chart" aria-label="Distribution of discourse-function labels in the benchmark" role="img"></canvas>
+                </div>
+                <figcaption>Distribution of discourse-function labels in CASTER. Four segments without a final valid tag are excluded from this analysis, yielding 28,730 tagged instances.</figcaption>
+              </figure>
+            </section>
+          </section>
+        </section>
+
+        <section
+          id="panel-dataset"
+          class="tab-panel"
+          role="tabpanel"
+          aria-labelledby="tab-trigger-dataset"
+          data-tab-panel="dataset"
+          hidden
+        >
+          <section class="content-section compact-section">
+            <h3>Match index</h3>
+            <div class="match-selector" id="match-selector"></div>
+          </section>
+
+          <section class="dataset-stage" id="workspace">
+            <section class="viewer-panel dataset-combined-panel">
+              <div class="dataset-segment-head">
+                <div class="dataset-segment-heading">
+                  <h3 id="clip-title">Segment 000</h3>
+                  <span class="dataset-segment-pill" id="clip-tag-pill">LOADING</span>
+                </div>
+                <label class="filter">
+                  <span>Discourse tag</span>
+                  <select id="tag-filter"></select>
+                </label>
+              </div>
+              <div class="video-wrap">
+                <video id="clip-player" controls preload="metadata" playsinline></video>
+              </div>
+              <div class="segment-list" id="segment-list"></div>
+            </section>
+
+            <article class="panel dataset-detail-panel">
+              <div class="panel-head">
+                <h3>Commentary</h3>
+              </div>
+              <div class="commentary-block">
+                <p class="lead" id="refined-commentary"></p>
+              </div>
+            </article>
+
+            <article class="panel dataset-detail-panel">
+              <div class="state-grid" id="state-grid"></div>
+              <div class="table-wrap">
+                <table class="state-compact-table">
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Frames</th>
+                      <th>Viewport</th>
+                      <th>Player</th>
+                      <th>Units</th>
+                    </tr>
+                  </thead>
+                  <tbody id="state-preview"></tbody>
+                </table>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <section
+          id="panel-benchmark"
+          class="tab-panel"
+          role="tabpanel"
+          aria-labelledby="tab-trigger-benchmark"
+          data-tab-panel="benchmark"
+          hidden
+        >
+          <section class="content-section">
+            <h2>Benchmark</h2>
+            <p>
+              We evaluate CASTER in a zero-shot setting on utterance-aligned clips using replay-rendered video only at inference time. The benchmark is designed to measure both structured observer-state
+              recovery and grounded commentary generation under realistic off-the-shelf prompting conditions.
+            </p>
+          </section>
+
+          <section class="task-columns">
+            <section class="content-section compact-section">
+              <h3>Task 1: Clip-to-Observation</h3>
+              <p>
+                Given a short observer-view clip <i>V</i>, the model predicts the structured observation sequence <i>O</i> defined by the released event schema. Each event contains a replay-frame span,
+                an observer viewport, and visible units grouped by player with approximate counts and coordinates.
+              </p>
+              <p>
+                We evaluate six complementary metrics: Format Accuracy, Unit F1, Count MAE, Viewport L2 Distance, Unit L2 Distance, and Temporal IoU after conversion to clip-relative frame offsets.
+              </p>
+            </section>
+
+            <section class="content-section compact-section">
+              <h3>Task 2: Clip+Observation-to-Commentary</h3>
+              <p>
+                Given a short clip and its synchronized observer-grounded observation record, the model generates commentary under <i>Text-Only</i>, <i>Video-Only</i>, and <i>Multimodal</i>
+                conditioning. We report GPT-4o baselines for overall performance and per-tag behavior.
+              </p>
+              <p>
+                Evaluation includes reference-based metrics BLEU-4 (B4), ROUGE-L (RL), and BERTScore (BS), together with LLM-based judgments of Tag Consistency (TC), Strategic Correctness (SC), and
+                Caster Naturalness (CN).
+              </p>
+            </section>
+          </section>
+
+          <section class="benchmark-visuals">
+            <figure class="figure-block chart-block benchmark-task1-block">
+              <div class="task1-metric-groups">
+                <section class="task1-metric-group">
+                  <p class="chart-shell-label">Task 1: Higher-is-better metrics</p>
+                  <div class="task1-metric-grid">
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">Format Acc</p>
+                      <canvas id="benchmark-task1-format-chart" aria-label="Task 1 format accuracy chart" role="img"></canvas>
+                    </div>
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">Unit F1</p>
+                      <canvas id="benchmark-task1-unitf1-chart" aria-label="Task 1 unit F1 chart" role="img"></canvas>
+                    </div>
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">Temporal IoU</p>
+                      <canvas id="benchmark-task1-tiou-chart" aria-label="Task 1 temporal IoU chart" role="img"></canvas>
+                    </div>
+                  </div>
+                </section>
+                <section class="task1-metric-group">
+                  <p class="chart-shell-label">Task 1: Lower-is-better metrics</p>
+                  <div class="task1-metric-grid">
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">Count MAE</p>
+                      <canvas id="benchmark-task1-countmae-chart" aria-label="Task 1 count MAE chart" role="img"></canvas>
+                    </div>
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">VP L2 Dist</p>
+                      <canvas id="benchmark-task1-vpl2-chart" aria-label="Task 1 viewport L2 distance chart" role="img"></canvas>
+                    </div>
+                    <div class="chart-shell chart-shell-small chart-shell-task1-metric">
+                      <p class="chart-shell-sublabel">Unit L2 Dist</p>
+                      <canvas id="benchmark-task1-unitl2-chart" aria-label="Task 1 unit L2 distance chart" role="img"></canvas>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <figcaption>Task 1 metrics are shown in six separate charts to preserve each metric's native scale. The top row shows higher-is-better metrics, and the bottom row shows lower-is-better metrics.</figcaption>
+            </figure>
+
+            <div class="task2-chart-strip">
+              <p class="chart-shell-label">Task 2: Higher-is-better metrics</p>
+              <section class="task2-chart-grid">
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">BLEU-4</p>
+                  <canvas id="benchmark-task2-b4-chart" aria-label="Task 2 BLEU-4 chart" role="img"></canvas>
+                </div>
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">ROUGE-L</p>
+                  <canvas id="benchmark-task2-rl-chart" aria-label="Task 2 ROUGE-L chart" role="img"></canvas>
+                </div>
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">BERTScore</p>
+                  <canvas id="benchmark-task2-bs-chart" aria-label="Task 2 BERTScore chart" role="img"></canvas>
+                </div>
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">Tag Consistency</p>
+                  <canvas id="benchmark-task2-tc-chart" aria-label="Task 2 Tag Consistency chart" role="img"></canvas>
+                </div>
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">Strategic Correctness</p>
+                  <canvas id="benchmark-task2-sc-chart" aria-label="Task 2 Strategic Correctness chart" role="img"></canvas>
+                </div>
+                <div class="chart-shell chart-shell-small chart-shell-task2-metric">
+                  <p class="chart-shell-sublabel">Caster Naturalness</p>
+                  <canvas id="benchmark-task2-cn-chart" aria-label="Task 2 Caster Naturalness chart" role="img"></canvas>
+                </div>
+              </section>
+              <p class="section-note">Overall GPT-4o modality comparison across reference-based and LLM-based Task 2 metrics. Higher is better for all six measures.</p>
+            </div>
+          </section>
+
+          <section class="content-section compact-section">
+            <h3>Task 1 results</h3>
+            <p class="section-note">Task 1 (Clip-to-Observation) results. Format Accuracy measures JSON-schema compliance; Unit F1 and Count MAE evaluate player-aware unit recovery; VP L2 Dist and Unit L2 Dist report localization error in raw replay-map coordinates; Temporal IoU measures clip-relative temporal overlap after frame-offset conversion.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Format Acc (%)</th>
+                    <th>Unit F1</th>
+                    <th>Count MAE</th>
+                    <th>VP L2 Dist</th>
+                    <th>Unit L2 Dist</th>
+                    <th>Temporal IoU</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>qwen3.5-397b-a17b</td>
+                    <td>96.07</td>
+                    <td>0.133</td>
+                    <td>1.87</td>
+                    <td>742.01</td>
+                    <td>403.03</td>
+                    <td>0.663</td>
+                  </tr>
+                  <tr>
+                    <td>mimo-v2-omni</td>
+                    <td>95.06</td>
+                    <td>0.132</td>
+                    <td>1.85</td>
+                    <td>749.12</td>
+                    <td>489.33</td>
+                    <td>0.632</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-4o</td>
+                    <td>99.36</td>
+                    <td>0.170</td>
+                    <td>1.55</td>
+                    <td>739.36</td>
+                    <td>394.67</td>
+                    <td>0.655</td>
+                  </tr>
+                  <tr>
+                    <td>Gemini 3.1 Pro</td>
+                    <td>99.42</td>
+                    <td>0.202</td>
+                    <td>1.04</td>
+                    <td>676.29</td>
+                    <td>325.83</td>
+                    <td>0.732</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="content-section compact-section">
+            <h3>Task 2 results</h3>
+            <p class="section-note">Task 2 (Clip+Observation-to-Commentary) results. Performance of GPT-4o across conditioning settings and discourse tags. B4: BLEU-4, RL: ROUGE-L, BS: BERTScore, TC: Tag Consistency, SC: Strategic Correctness, CN: Caster Naturalness. Higher is better.</p>
+            <div class="table-wrap">
+              <table class="benchmark-task2-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Tag</th>
+                    <th colspan="6">Multimodal</th>
+                    <th colspan="6">Video-Only</th>
+                    <th colspan="6">Text-Only</th>
+                  </tr>
+                  <tr>
+                    <th>B4</th><th>RL</th><th>BS</th><th>TC</th><th>SC</th><th>CN</th>
+                    <th>B4</th><th>RL</th><th>BS</th><th>TC</th><th>SC</th><th>CN</th>
+                    <th>B4</th><th>RL</th><th>BS</th><th>TC</th><th>SC</th><th>CN</th>
+                  </tr>
+                </thead>
+                <tbody id="task2-results-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
