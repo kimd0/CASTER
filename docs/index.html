@@ -343,6 +343,25 @@
                 <figcaption>Distribution of discourse-function labels in CASTER. Four segments without a final valid tag are excluded from this analysis, yielding 28,730 tagged instances.</figcaption>
               </figure>
             </section>
+
+            <section class="content-section compact-section overview-section overview-diagnostics-section">
+              <h3 class="overview-heading">Verifying Label Integrity in Commentary Classification</h3>
+              <div class="overview-evidence-grid overview-diagnostics-grid">
+                <figure class="figure-block overview-evidence-figure overview-diagnostic-figure">
+                  <div class="figure-media figure-media-frame overview-diagnostic-media">
+                    <img src="./assets/figs/confusion_matrix.png" alt="Confusion matrix of the auxiliary ModernBERT classifier evaluated on the annotated dataset." decoding="async">
+                  </div>
+                  <figcaption>Confusion matrix of the auxiliary ModernBERT classifier evaluated on the annotated dataset. The strong diagonal dominance with negligible offdiagonal overlap indicates that the LLM-induced annotation logic is systematic and highly consistent.</figcaption>
+                </figure>
+
+                <figure class="figure-block overview-evidence-figure overview-diagnostic-figure">
+                  <div class="figure-media figure-media-frame overview-diagnostic-media">
+                    <img src="./assets/figs/tsne.png" alt="t-SNE projection of the contextualized representations from the classifier's final hidden layer." decoding="async">
+                  </div>
+                  <figcaption>t-SNE projection of the contextualized representations from the classifier's final hidden layer. The highly cohesive and strictly separated clusters confirm that the chosen discourse categories capture genuinely distinct semantic intents.</figcaption>
+                </figure>
+              </div>
+            </section>
           </section>
         </section>
 

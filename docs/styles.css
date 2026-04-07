@@ -529,11 +529,34 @@ img {
   margin: 0 auto;
 }
 
+.overview-diagnostics-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
 .alignment-paper-figure,
 .overview-alignment-section,
-.overview-label-section {
+.overview-label-section,
+.overview-diagnostics-section {
   width: min(100%, 940px);
   margin: 0 auto;
+}
+
+.overview-diagnostic-figure {
+  width: 100%;
+}
+
+.figure-media.figure-media-frame.overview-diagnostic-media {
+  height: clamp(248px, 24vw, 318px);
+  min-height: 0;
+  padding: 10px;
+  background: #ffffff;
+}
+
+.overview-diagnostic-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .alignment-paper-layout {
@@ -1840,7 +1863,8 @@ th {
   }
 
   .alignment-paper-layout,
-  .overview-diversity-grid {
+  .overview-diversity-grid,
+  .overview-diagnostics-grid {
     grid-template-columns: 1fr;
   }
 
