@@ -108,13 +108,14 @@
                   Many multimedia language-generation tasks require grounding in both visible content and evolving, partially observable structured states. Professional esports commentary exemplifies
                   this: in <i>StarCraft: Brood War</i>, meaningful commentary relies on short-term temporal context, observer camera motion, and observer-visible unit configurations. We introduce
                   <b>CASTER</b> (<i>Commentary Alignment and State Tracking for Esports Research</i>), a multimodal dataset for observation-grounded commentary in partially observable environments.
-                  It aligns utterance-level observer-view clips, structured state from replay logs and viewport traces, and quality-controlled professional commentary.
+                  It aligns utterance-level observer-view clips, structured states from replay logs and viewport traces, and ASR+LLM-refined, manually verified commentary.
                 </p>
                 <p>
-                  CASTER comprises <b>239</b> matches and <b>28,734</b> aligned clip-state-commentary instances with strict game-level splits. We define two tasks for reproducible evaluation:
+                  CASTER comprises <b>239</b> matches and <b>28,734</b> aligned clip&ndash;state&ndash;commentary instances with strict game-level splits. We define two tasks for reproducible evaluation:
                   (1) <i>Clip-to-Observation</i>, predicting structured observer-state events from clips, and (2) <i>Clip+Observation-to-Commentary</i>, generating commentary conditioned on synchronized
-                  visual and structured inputs. Results indicate that recovering structured state from clips alone remains challenging, while Task 2 establishes reference points for commentary generation
-                  under clip-only, observation-only, and multimodal conditioning.
+                  visual and structured inputs. We detail the synchronization pipeline, report a 6,000-sample manual audit of alignment quality, and provide zero-shot baselines. Results indicate that
+                  recovering structured state from clips alone remains challenging, while Task 2 establishes reference points for commentary generation under various conditionings. CASTER offers a novel
+                  testbed for state-grounded narration, multimodal game understanding, and commentary assistance.
                 </p>
               </div>
             </section>
